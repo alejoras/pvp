@@ -293,15 +293,15 @@ def build(d):
             sub)
     elif leadmagnet:
         dollar = f"${d['eng_roles'] * 25 * 125:,}"
+        # greeting moves into the kicker; H1 carries the punchy claim (no em dash, fits the fold)
         page = page.replace('AI-Readiness Teardown · June 11, 2026',
-                            f'Engineering Hiring Teardown · {GEN_DATE}')
-        h1_inner = (f"Hey {greet} — you're hiring <em>{d['eng_roles']} engineers</em>, "
-                    f"and AI made your coding screen easy to fake. Here's what it's costing you, "
-                    f"and who's slipping through.")
+                            f'Hey {greet} · Engineering hiring teardown')
+        h1_inner = (f"{d['eng_roles']} open roles. Your coding screen can't tell "
+                    f"builders from <em>vibecoders</em>.")
         sub = (f"AI didn't make your coding screen easier to pass. It made it easier to fake. "
-               f"This puts a dollar figure on the senior-engineer hours you're burning to tell the "
-               f"real builders from the vibecoders — roughly <strong>{dollar}</strong> across "
-               f"{d['eng_roles']} open roles. Built from {d['company']}'s live careers data. "
+               f"This puts a dollar figure on the senior-engineer hours you're burning to find the "
+               f"real builders: roughly <strong>{dollar}</strong> across {d['eng_roles']} open roles. "
+               f"Built from {d['company']}'s live careers data. "
                f"<strong>No form, no gate.</strong> Yours to keep.")
         page = page.replace(
             "A role-by-role read of Vanta's public engineering openings, scored for <strong>AI-era readiness</strong> and benchmarked against what 26M+ developers can actually do. Built from your own job posts. <strong>No ask, no form, no gate.</strong> Ten minutes, yours to keep.",
@@ -508,6 +508,15 @@ def build(d):
         page = page.replace(
             f'src="https://www.google.com/s2/favicons?domain={d["domain"]}&amp;sz=64" alt="{d["company"]} logo" onerror="this.style.display=\'none\'"',
             f'src="../logos/{d["slug"]}.svg" alt="{d["company"]} logo"')
+        # soft inline CTA at the emotional peak — right under the dollar figure
+        peak_cta = (f'\n        <a href="#cta" class="rv" style="display:inline-flex;align-items:center;'
+                    f'gap:8px;margin-top:20px;padding:11px 18px;border:1px solid rgba(34,205,110,.4);'
+                    f'border-radius:10px;background:rgba(34,205,110,.07);color:var(--green-40);'
+                    f'font-weight:600;font-size:14.5px;letter-spacing:-.01em;text-decoration:none">'
+                    f'Want all {d["eng_roles"]} roles scored? <span aria-hidden="true">&rarr;</span></a>')
+        page = page.replace(
+            'before counting the false positives a low-signal screen sends to onsite.</div>\n        </div>',
+            'before counting the false positives a low-signal screen sends to onsite.</div>\n        </div>' + peak_cta)
         # move the cost section up to right after footprint (lead with the interactive bill)
         cs = page.index('<section id="cost">')
         ce = page.index('</section>', cs) + len('</section>')
