@@ -257,7 +257,10 @@ def build(d):
         prepared = f'Prepared for <b>{d["first"]}</b> · engineering leadership, {d["company"]}'
 
     # 0) meta description
-    if cost_variant:
+    if leadmagnet:
+        meta = (f"AI made your coding screen easy to fake. What {d['company']}'s {d['eng_roles']} "
+                f"open engineering roles cost in interview hours, and who's slipping through.")
+    elif cost_variant:
         meta = (f"What {d['company']}'s {d['eng_roles']} open engineering roles cost in "
                 f"senior-engineer interview hours, and the screening fix.")
     else:
